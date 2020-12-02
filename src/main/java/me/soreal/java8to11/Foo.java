@@ -45,6 +45,8 @@ public class Foo {
         // UnaryOperator
         UnaryOperator<Integer> plus100 = (i) -> i + 100;
 
+        // BinaryOperator
+
 
     }
 }

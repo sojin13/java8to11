@@ -45,8 +45,36 @@ public class Foo {
         // UnaryOperator
         UnaryOperator<Integer> plus100 = (i) -> i + 100;
 
-        // BinaryOperator
-
+        // BinaryOperato
 
     }
+
+    // 변수 캡쳐
+    private void run() {
+        int baseNumber = 10;
+
+        // 로컬 클래스
+        class LocalClass {
+            void printBaseNumber() {
+                int baseNumber = 11;
+                System.out.println(baseNumber); // 11
+            }
+        }
+
+        // 익명 클래스
+        Consumer<Integer> integerConsumer = new Consumer<Integer>() {
+            @Override
+            public void accept(Integer baseNumber) {
+                System.out.println(baseNumber); // shadowing
+            }
+        };
+
+        // 람다 표현식 : scope이 같아서 shadowing이 일어나지 않음.
+        IntConsumer printInt = (i) -> { // 같은 scope이라서 i 대신 baseNumber 라는 변수로 명칭 변경이 불가한 것.
+            System.out.println(i + baseNumber); // effective final 변수라서 쓰고 있음. 나중에 baseNumber이 바뀌는 코드가 생기면 컴파일 에러가 발생.
+        };
+
+        printInt.accept(10);
+    }
+
 }

@@ -36,6 +36,14 @@ public class App {
         System.out.println(Arrays.toString(names)); // [jean, jiny, soreal]
 
 
+        // 인터페이스 기본 메소드와 스태틱 메소드
+        Bar bar = new DefaultBar("soreal");
+        bar.printName(); // soreal
+
+        Bar.printAnything(); // 스태틱 메소드 호출  // Bar
+
+
+
     }
 
 }

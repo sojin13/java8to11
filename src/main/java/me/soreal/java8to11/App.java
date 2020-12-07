@@ -139,12 +139,12 @@ public class App {
         System.out.println("close 되지 않은 수업");
         // 방법1
         springClasses.stream()
-                .filter(oc -> !oc.isColsed())
+                .filter(oc -> !oc.isClosed())
                 .forEach(oc -> System.out.println(oc.getId()));
 
         // 방법2
         springClasses.stream()
-                .filter(Predicate.not(OnlineClass::isColsed))
+                .filter(Predicate.not(OnlineClass::isClosed))
                 .forEach(oc -> System.out.println(oc.getId()));
 
         System.out.println("수업 이름만 모아서 스트림 만들기");
@@ -185,6 +185,50 @@ public class App {
         spring.forEach(System.out::println);
 
 
+        // Optional
+        Optional<OnlineClass> optional = springClasses.stream()
+                .filter(oc -> oc.getTitle().startsWith("spring"))
+                .findFirst();
+
+//        boolean present = optional.isPresent();
+//        System.out.println(present); // true
+
+//        OnlineClass onlineClass1 = optional.get();
+//        System.out.println(onlineClass1.getTitle());
+
+//        optional.ifPresent(oc -> System.out.println(oc.getTitle()));
+
+//        OnlineClass onlineClass2 = optional.orElse(createNewClasses()); // orElse의 연산이 무조건 실행하게됨.
+//        System.out.println(onlineClass2.getTitle());
+
+//        OnlineClass onlineClass3 = optional.orElseGet(App::createNewClasses);
+//        System.out.println(onlineClass3.getTitle());
+
+        // 값이 무조건 있어야 하고 없는 경우 에러를 던진다.
+//        OnlineClass onlineClass4 = optional.orElseThrow(IllegalStateException::new);
+//        System.out.println(onlineClass4.getTitle());
+
+        Optional<OnlineClass> onlineClass5 =
+                optional.filter(OnlineClass::isClosed);
+
+        System.out.println(onlineClass5.isPresent());
+
+        Optional<Integer> integer = optional.map(OnlineClass::getId);
+        System.out.println(integer.isPresent());
+
+        // Optional 양파까기 대신 flatmap
+        Optional<Progress> progress = optional.flatMap(OnlineClass::getProgress); // 아래와 같은 코드임
+
+        Optional<Optional<Progress>> progress1 = optional.map(OnlineClass::getProgress);
+        Optional<Progress> progress2 = progress1.orElse(Optional.empty());
+
+
+
+    }
+
+    private static OnlineClass createNewClasses() {
+        System.out.println("creating new online class");
+        return new OnlineClass(10, "New class", false);
     }
 
 }

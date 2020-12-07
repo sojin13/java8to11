@@ -1,17 +1,21 @@
 package me.soreal.java8to11;
 
+import java.util.Optional;
+
 public class OnlineClass {
 
     private Integer id;
 
     private String title;
 
-    private boolean colsed;
+    private boolean closed;
 
-    public OnlineClass(Integer id, String title, boolean colsed) {
+    public Progress progress;
+
+    public OnlineClass(Integer id, String title, boolean closed) {
         this.id = id;
         this.title = title;
-        this.colsed = colsed;
+        this.closed = closed;
     }
 
     public Integer getId() {
@@ -30,11 +34,15 @@ public class OnlineClass {
         this.title = title;
     }
 
-    public boolean isColsed() {
-        return colsed;
+    public boolean isClosed() {
+        return closed;
     }
 
-    public void setColsed(boolean colsed) {
-        this.colsed = colsed;
+    public void setClosed(boolean closed) {
+        this.closed = closed;
+    }
+
+    public Optional<Progress> getProgress() {
+        return Optional.empty();
     }
 }

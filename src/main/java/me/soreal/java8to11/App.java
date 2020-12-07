@@ -4,6 +4,10 @@ import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.w3c.dom.ls.LSOutput;
 
 import java.sql.SQLOutput;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -14,7 +18,7 @@ import java.util.stream.Stream;
 
 public class App {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         // :: 메소드 레퍼런스
         // static 메소드
@@ -221,6 +225,86 @@ public class App {
 
         Optional<Optional<Progress>> progress1 = optional.map(OnlineClass::getProgress);
         Optional<Progress> progress2 = progress1.orElse(Optional.empty());
+
+
+        // DATE API
+
+        // 구버전 DATE API
+        Date date = new Date();
+        Calendar calendar = new GregorianCalendar();
+        SimpleDateFormat dateFormat = new SimpleDateFormat();
+
+        // mutable한 java.utill.Date 클래스 -> Thread safe하지 않음.
+//        long time = date.getTime();
+//        System.out.println(date); // ex) Sun Jun 15:32:32 PDT 2020
+//        System.out.println(time); // ex) 159277875829
+//
+//        Thread.sleep(1000 * 3);
+//        Date after3Seconds = new Date();
+//        System.out.println(after3Seconds); // ex) Sun Jun 21 15:32:35 PDT 2020
+//        after3Seconds.setTime(time);
+//        System.out.println(after3Seconds); // ex) Sun Jun 21 15:32:32 PDT 2020
+
+        Calendar sorealBirthDay = new GregorianCalendar(1992, 1, 13); // 이럼 2월 13일이 되어버림
+
+
+        // 자바 8 Date/Time API : Clear, Fluent, Immutable, Extensible
+        // 기계용 시간(timstamp)과 인류용 시간(연,월,일,시,분,초)을 나눔.
+
+        // 기계용 시간 API
+        Instant instant = Instant.now();
+        System.out.println(instant); // 기준시 UTC, GMT
+
+        ZoneId zone = ZoneId.systemDefault();
+        System.out.println(zone);
+        ZonedDateTime zonedDateTime = instant.atZone(zone);
+        System.out.println(zonedDateTime);
+
+        // 사람용 시간 LocalDateTime
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(now);
+
+        LocalDateTime birthday =
+                LocalDateTime.of(1992, Month.JANUARY, 3, 0, 0);
+
+        ZonedDateTime nowInLa = ZonedDateTime.now(ZoneId.of("America/Los_Angeles"));
+        System.out.println(nowInLa);
+
+        // instant로 위의 시간을 표현.
+        Instant nowInstant = instant.now();
+        ZonedDateTime zonedDateTime1 = nowInstant.atZone(ZoneId.of("America/Los_Angeles"));
+        System.out.println(zonedDateTime1);
+
+        // 기간을 표현하는 방법
+        LocalDate today = LocalDate.now();
+        LocalDate nextyearBirthdaty = LocalDate.of(2021, Month.JANUARY, 3);
+
+        // Period : 사람용 시간비교
+        Period period = Period.between(today, nextyearBirthdaty);
+        System.out.println(period.getDays());
+
+        Period until = today.until(nextyearBirthdaty);
+        System.out.println(until.get(ChronoUnit.DAYS));
+
+        // Duration : 기계용 시간 비교
+        Instant now1 = Instant.now();
+        Instant plus = now1.plus(10, ChronoUnit.SECONDS);
+        Duration between = Duration.between(now1, plus);
+        System.out.println(between.getSeconds());
+
+        // 포매팅
+        // LocalDateTime
+        LocalDateTime now2 = LocalDateTime.now();
+        System.out.println(now2);
+
+        DateTimeFormatter MMddyyyy = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        System.out.println(now.format(MMddyyyy));
+
+        LocalDate parse = LocalDate.parse("01/03/1992", MMddyyyy);
+        System.out.println(parse);
+
+
+
 
 
 

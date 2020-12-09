@@ -1,6 +1,6 @@
 package me.soreal.java8to11;
 
-public class ComFutureApp {
+public class ThreadApp {
 
     public static void main(String[] args) throws InterruptedException {
 

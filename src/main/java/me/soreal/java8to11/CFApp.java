@@ -138,9 +138,7 @@ public class CFApp<pivate> {
 
         System.out.println(generalHello.get());
 
-
     }
-
 
     private static CompletableFuture<String> getWorld(String message) {
         return CompletableFuture.supplyAsync(() -> {

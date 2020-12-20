@@ -20,6 +20,18 @@ public class App {
 
     public static void main(String[] args) throws InterruptedException {
 
+        // 자바 8 요약
+
+        // 함수형 프로그래밍
+        // 함수형 인터페이스, 람다 표현식, 메소드 레퍼런스
+
+        // 비동기 프로그래밍
+        // CompletableFuture
+
+        // 편의성 개선
+        // Optional, Date&Time, 인터페이스.
+
+
         // :: 메소드 레퍼런스
         // static 메소드
         UnaryOperator<String> hi = Greeting::hi;
